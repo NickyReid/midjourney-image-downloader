@@ -6,9 +6,9 @@ from datetime import datetime
 # Update USER_ID and SESSION_TOKEN:
 # ---------------------------------
 # Get your user ID from the "view as visitor link (https://www.midjourney.com/app/users/.../) on your Midjourney gallery
-USER_ID = None
+USER_ID = "410153399388995584"
 # In your browser's dev tools, find the `__Secure-next-auth.session-token` cookie.
-SESSION_TOKEN = None
+SESSION_TOKEN = "eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..VXbH2l4_7cXi72UF.VotcPFSKayLbl7L4xebmN7JO3YOPlhkQqgRHrIqy0xpLjsGSeqFWzkHnhpLNzUtus24Gvu_s9Q0uky1xQyDpFsQMYnXc0ysIx6COWDMsbEx7HSNlzoi0UDZdQya9xyKxznPmBZ85nH0KAtzX4Le45KeJlRYj8FyBOz6edFgkBJvbBjEc8ud4VbRS36LP1Wl-YjKWnthEkStIwnMVV1_J3RBOe0NpqpHMF6p3LDf6_MEVmv9GzxD4p-KemoFklg1A3CvxcIt8yyDw0jttLtttpbDTkfnnVU2L7H2cFi09TqQeMaXTtioE3NdzkHJSnANfLmEKlyO2DDlAqkhLBLO1Gh4p75gKCRrmJxm8Nm96R7D4KRzRvictb3m5LWzCUb-JqtTQbjqYAoeORAFigKRWRciqaHMXBBFnCPDvqHegsV1i32GVVcp7wW24tSv5-7qLX1yzfF_rKtq4tOUt3aitmqWR34CI6wxC0zyRzwb0wOHilMXpW-Nhd1cCO5ZGgWkW80WL-nhVzMP_KpGykvhaVJIDOF101bW_3YSzqm-ahkWMc7Y2S8pKDV-S2Z4H7idf6IjhnPl3kLCStdAEOLrbrvhaWWRnI9fSDTw_u68QpFBREs-eI1GLeSeKgnbFexG6gjICnCEIdZ9xGuNCfaU6jHi8DN5I2qM8AxDtzY37WDgtZlwJe-dEoWDDlFyQ5AHU2Pjo79cCpZy7cU43h4LeLHbejS4hMfPZgOPzWTxd9sLCOCKIghE9c0Z6qFVjKXAuwJ1uXF0YIf12DRbQtyRA8-Yb71hnLUF6urH6RZFt1ez9E0ToJ64feEOcacZmYCyiB3T4LB_FiJlSP6YKpAZ_s_E2d7Fn-sAnVWZfAdTVP6tmOXkzINoNgK3tJItfJQjgHi1PMIsrEIxyAcv53XLIHmXLocHLf-5TakdlX1nW9SfmYUkue-eF3q-RkoffCzcLRaj0PYDkfXQ_DyZ98UJxVOZBUzU8-zJgM_JfQW0tOXRzcQ1xMyE6a8frREcwE9yVZy0vdO7ljexFSUIpI4PnnewNF8fyqwZ6-gvkCnE4aZVNVwGms9eTSPHMTCU8VqDTKGjdyoy98gSfqcuJkL9CqGM5kJJSd0WJ3CGPOEWpjyRm2wVbMWJrtjJ584Z_-7jKG4q3lrabsdkVuj5E9HfsnEOiuyvw1u8Qrxp5SbfLViXQSHIPjslVGOqr5ZeV0MEfp2Kqfk39N9N_JIXNW2uG8YkrliuXI0ySMUiu_wTCQlxsgCsi9PzpOY_PWW2YPpNtNsoPEvYGvHkBy1YggQyl8oIn60iyHF6kYt7oDPgpYCJ7geglOoG7PVw22QXyx5XIIDxJhzola6C8RZOmUwQSvkqTwKg.vs4OJIg6SEP0exkFQTj76A"
 # ---------------------------------
 
 UA = 'Midjourney-image-downloader/0.0.1'
