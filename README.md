@@ -1,7 +1,7 @@
 # midjourney-image-downloader
-Download images from your Midjourney web gallery.
+Download your Midjourney gallery.
 
-Copied from https://github.com/timmc/midjourney-history-sync ⭐️
+Copied from https://github.com/timmc/midjourney-history-sync ⭐ and adapted with additional advice from [timmc](https://github.com/timmc) ️
 
 ## About
 - Only saves Upscaled images
