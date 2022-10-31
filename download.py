@@ -5,7 +5,7 @@ from datetime import datetime
 
 # Update USER_ID and SESSION_TOKEN:
 # ---------------------------------
-# Get your user ID from the "view as visitor link (https://www.midjourney.com/app/users/.../)
+# Get your user ID from the "view as visitor link (https://www.midjourney.com/app/users/.../) on your Midjourney gallery
 USER_ID = None
 # In your browser's dev tools, find the `__Secure-next-auth.session-token` cookie.
 SESSION_TOKEN = None
