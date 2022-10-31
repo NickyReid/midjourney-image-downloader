@@ -75,8 +75,6 @@ def save_prompt(image_json):
         return
     else:
         for idx, image_url in enumerate(image_paths):
-            print(idx)
-            print(image_url)
             if idx > 0:
                 filename = f"{filename[:97]}-{idx}"
                 full_path = f"{image_path}/{filename}.png"
