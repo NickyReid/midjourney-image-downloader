@@ -3,16 +3,18 @@ import requests
 import urllib.request
 from datetime import datetime
 
-# Update USER_ID and SESSION_TOKEN:
-# ---------------------------------
+# -------- CONFIG ------------------
 # Get your user ID from the "view as visitor link (https://www.midjourney.com/app/users/.../) on your Midjourney gallery
 USER_ID = None
 # In your browser's dev tools, find the `__Secure-next-auth.session-token` cookie.
 SESSION_TOKEN = None
 # ---------------------------------
 
+# ------- OPTIONS -----------------
 UPSCALES_ONLY = True
 GRIDS_ONLY = False
+USE_DATE_FOLDERS = True
+# ---------------------------------
 
 UA = 'Midjourney-image-downloader/0.0.1'
 HEADERS = {'User-Agent': UA}
@@ -43,15 +45,20 @@ def download_page(page):
 
 
 def ensure_path_exists(year, month, day, image_id):
-    if not os.path.isdir(f"jobs/{year}"):
-        os.makedirs(f"jobs/{year}")
-    if not os.path.isdir(f"jobs/{year}/{month}"):
-        os.makedirs(f"jobs/{year}/{month}")
-    if not os.path.isdir(f"jobs/{year}/{month}/{day}"):
-        os.makedirs(f"jobs/{year}/{month}/{day}")
-    if not os.path.isdir(f"jobs/{year}/{month}/{day}/{image_id}"):
-        os.makedirs(f"jobs/{year}/{month}/{day}/{image_id}")
-    return f"jobs/{year}/{month}/{day}/{image_id}"
+    if USE_DATE_FOLDERS:
+        if not os.path.isdir(f"jobs/{year}"):
+            os.makedirs(f"jobs/{year}")
+        if not os.path.isdir(f"jobs/{year}/{month}"):
+            os.makedirs(f"jobs/{year}/{month}")
+        if not os.path.isdir(f"jobs/{year}/{month}/{day}"):
+            os.makedirs(f"jobs/{year}/{month}/{day}")
+        if not os.path.isdir(f"jobs/{year}/{month}/{day}/{image_id}"):
+            os.makedirs(f"jobs/{year}/{month}/{day}/{image_id}")
+        return f"jobs/{year}/{month}/{day}/{image_id}"
+    else:
+        if not os.path.isdir(f"jobs/{image_id}"):
+            os.makedirs(f"jobs/{image_id}")
+        return f"jobs/{image_id}"
 
 
 def save_prompt(image_json):
