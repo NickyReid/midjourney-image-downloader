@@ -72,7 +72,7 @@ def save_prompt(image_json):
     day = enqueue_time.day
 
     image_path = ensure_path_exists(year, month, day, image_id)
-    filename = prompt.replace(" ", "_").replace(",", "").replace("*", "").replace("'", "").replace(":", "").replace("__", "_").lower().strip("_*")[:100]
+    filename = prompt.replace(" ", "_").replace(",", "").replace("*", "").replace("'", "").replace(":", "").replace("__", "_").replace("<", "").replace(">", "").replace("/", "").replace(".", "").lower().strip("_*")[:100]
     full_path = f"{image_path}/{filename}.png"
 
     completed_file_path = f"{image_path}/done"
