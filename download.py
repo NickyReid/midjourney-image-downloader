@@ -14,6 +14,8 @@ SESSION_TOKEN = None
 UPSCALES_ONLY = True
 GRIDS_ONLY = False
 USE_DATE_FOLDERS = True
+GROUP_BY_MONTH = True
+SKIP_LOW_RATED = True
 # ---------------------------------
 
 UA = 'Midjourney-image-downloader/0.0.1'
@@ -50,11 +52,16 @@ def ensure_path_exists(year, month, day, image_id):
             os.makedirs(f"jobs/{year}")
         if not os.path.isdir(f"jobs/{year}/{month}"):
             os.makedirs(f"jobs/{year}/{month}")
-        if not os.path.isdir(f"jobs/{year}/{month}/{day}"):
-            os.makedirs(f"jobs/{year}/{month}/{day}")
-        if not os.path.isdir(f"jobs/{year}/{month}/{day}/{image_id}"):
-            os.makedirs(f"jobs/{year}/{month}/{day}/{image_id}")
-        return f"jobs/{year}/{month}/{day}/{image_id}"
+        if not os.path.isdir(f"jobs/{year}/{month}/{image_id}"):
+            os.makedirs(f"jobs/{year}/{month}/{image_id}")
+        if GROUP_BY_MONTH:
+            return f"jobs/{year}/{month}/{image_id}"
+        else:
+            if not os.path.isdir(f"jobs/{year}/{month}/{day}"):
+                os.makedirs(f"jobs/{year}/{month}/{day}")
+            if not os.path.isdir(f"jobs/{year}/{month}/{day}/{image_id}"):
+                os.makedirs(f"jobs/{year}/{month}/{day}/{image_id}")
+            return f"jobs/{year}/{month}/{day}/{image_id}"
     else:
         if not os.path.isdir(f"jobs/{image_id}"):
             os.makedirs(f"jobs/{image_id}")
@@ -77,8 +84,10 @@ def save_prompt(image_json):
 
     completed_file_path = f"{image_path}/done"
     image_completed = os.path.isfile(completed_file_path)
-    if image_completed:
-        # print(f"Already downloaded {filename}")
+    ranking_by_user = image_json.get("ranking_by_user")
+    if SKIP_LOW_RATED and ranking_by_user and isinstance(ranking_by_user, int) and (ranking_by_user in [1, 2]):
+        return
+    elif image_completed:
         return
     else:
         for idx, image_url in enumerate(image_paths):
