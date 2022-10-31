@@ -31,7 +31,7 @@ def download_page(page):
     for idx, image_json in enumerate(page):
         filename = save_prompt(image_json)
         if filename:
-            print(f"{idx}/{len(page)} Downloaded {filename}")
+            print(f"{idx+1}/{len(page)} Downloaded {filename}")
 
 
 def ensure_path_exists(year, month, day, image_id):
