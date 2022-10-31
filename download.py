@@ -11,6 +11,9 @@ USER_ID = None
 SESSION_TOKEN = None
 # ---------------------------------
 
+UPSCALES_ONLY = True
+GRIDS_ONLY = False
+
 UA = 'Midjourney-image-downloader/0.0.1'
 HEADERS = {'User-Agent': UA}
 COOKIES = {'__Secure-next-auth.session-token': SESSION_TOKEN}
@@ -20,7 +23,12 @@ ORDER_BY_OPTIONS = ["new", "oldest", "hot", "rising", "top-today", "top-week", "
 def get_api_page(order_by="new", page=1):
     api_url = "https://www.midjourney.com/api/app/recent-jobs/" \
               f"?orderBy={order_by}&jobStatus=completed&userId={USER_ID}" \
-              f"&dedupe=true&refreshApi=0&amount=50&page={page}&jobType=upscale"
+              f"&dedupe=true&refreshApi=0&amount=50&page={page}"
+    if UPSCALES_ONLY:
+        api_url += "&jobType=upscale"
+    elif GRIDS_ONLY:
+        api_url += "&jobType=grid"
+
     print(f"API URL = {api_url}")
     response = requests.get(api_url, cookies=COOKIES, headers=HEADERS)
     result = response.json()
@@ -55,24 +63,27 @@ def save_prompt(image_json):
     year = enqueue_time.year
     month = enqueue_time.month
     day = enqueue_time.day
-    image_path = ensure_path_exists(year, month, day, image_id)
 
+    image_path = ensure_path_exists(year, month, day, image_id)
     filename = prompt.replace(" ", "_").replace(",", "").replace("*", "").replace("'", "").replace(":", "").lower().strip("_*")[:100]
+    full_path = f"{image_path}/{filename}.png"
+
     completed_file_path = f"{image_path}/done"
     image_completed = os.path.isfile(completed_file_path)
     if image_completed:
         print(f"Already downloaded {filename}")
         return
-
-    for idx, image_url in enumerate(image_paths):
-        if idx > 0:
-            filename = f"{filename[:97]}-{idx}"
-        # print(f"Downloading '{filename}'")
-        urllib.request.urlretrieve(image_url,
-                                   f"{image_path}/{filename}.png")
-    f = open(completed_file_path, "x")
-    f.close()
-    return f"{image_path}/{filename}"
+    else:
+        for idx, image_url in enumerate(image_paths):
+            print(idx)
+            print(image_url)
+            if idx > 0:
+                filename = f"{filename[:97]}-{idx}"
+                full_path = f"{image_path}/{filename}.png"
+            urllib.request.urlretrieve(image_url, full_path)
+        f = open(completed_file_path, "x")
+        f.close()
+    return full_path
 
 
 def paginated_download(order_by="new"):
