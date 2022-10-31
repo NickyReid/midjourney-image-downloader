@@ -14,10 +14,7 @@ SESSION_TOKEN = None
 UA = 'Midjourney-image-downloader/0.0.1'
 HEADERS = {'User-Agent': UA}
 COOKIES = {'__Secure-next-auth.session-token': SESSION_TOKEN}
-
-ORDER_BY_OLD_AND_NEW = ["new", "oldest"]
-ORDER_BY_OTHER = ["hot", "rising", "top-today", "top-week", "top-month", "top-all", "like_count"]
-ORDER_BY_ALL = ORDER_BY_OLD_AND_NEW + ORDER_BY_OTHER
+ORDER_BY_OPTIONS = ["new", "oldest", "hot", "rising", "top-today", "top-week", "top-month", "top-all", "like_count"]
 
 
 def get_api_page(order_by="new", page=1):
@@ -60,7 +57,7 @@ def save_prompt(image_json):
     day = enqueue_time.day
     image_path = ensure_path_exists(year, month, day, image_id)
 
-    filename = prompt.replace(" ", "_").replace(",", "").replace("*", "").replace("'", "").lower().strip("_*")[:100]
+    filename = prompt.replace(" ", "_").replace(",", "").replace("*", "").replace("'", "").replace(":", "").lower().strip("_*")[:100]
     completed_file_path = f"{image_path}/done"
     image_completed = os.path.isfile(completed_file_path)
     if image_completed:
@@ -93,7 +90,7 @@ def paginated_download(order_by="new"):
 
 
 def download_all_order_by_types():
-    for order_by_type in ORDER_BY_ALL:
+    for order_by_type in ORDER_BY_OPTIONS:
         paginated_download(order_by_type)
 
 
