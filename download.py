@@ -10,11 +10,12 @@ USER_ID = None
 SESSION_TOKEN = None
 # ---------------------------------
 
+
 # ------- OPTIONS -----------------
 UPSCALES_ONLY = True
 GRIDS_ONLY = False
 USE_DATE_FOLDERS = True
-GROUP_BY_MONTH = True
+GROUP_BY_MONTH = False
 SKIP_LOW_RATED = True
 # ---------------------------------
 
@@ -52,9 +53,9 @@ def ensure_path_exists(year, month, day, image_id):
             os.makedirs(f"jobs/{year}")
         if not os.path.isdir(f"jobs/{year}/{month}"):
             os.makedirs(f"jobs/{year}/{month}")
-        if not os.path.isdir(f"jobs/{year}/{month}/{image_id}"):
-            os.makedirs(f"jobs/{year}/{month}/{image_id}")
         if GROUP_BY_MONTH:
+            if not os.path.isdir(f"jobs/{year}/{month}/{image_id}"):
+                os.makedirs(f"jobs/{year}/{month}/{image_id}")
             return f"jobs/{year}/{month}/{image_id}"
         else:
             if not os.path.isdir(f"jobs/{year}/{month}/{day}"):
@@ -78,23 +79,27 @@ def save_prompt(image_json):
     month = enqueue_time.month
     day = enqueue_time.day
 
-    image_path = ensure_path_exists(year, month, day, image_id)
-    filename = prompt.replace(" ", "_").replace(",", "").replace("*", "").replace("'", "").replace(":", "").replace("__", "_").replace("<", "").replace(">", "").replace("/", "").replace(".", "").lower().strip("_*")[:100]
-    full_path = f"{image_path}/{filename}.png"
+    filename = prompt.replace(" ", "_").replace(",", "").replace("*", "").replace("'", "").replace(":", "").replace(
+        "__", "_").replace("<", "").replace(">", "").replace("/", "").replace(".", "").lower().strip("_*")[:100]
 
-    completed_file_path = f"{image_path}/done"
-    image_completed = os.path.isfile(completed_file_path)
     ranking_by_user = image_json.get("ranking_by_user")
     if SKIP_LOW_RATED and ranking_by_user and isinstance(ranking_by_user, int) and (ranking_by_user in [1, 2]):
+        # print(f"Skipping low rated image {filename}")
         return
-    elif image_completed:
+    elif os.path.isfile(f"jobs/{year}/{month}/{image_id}/done") or \
+            os.path.isfile(f"jobs/{year}/{month}/{day}/{image_id}/done") or \
+            os.path.isfile(f"jobs/{image_id}/done"):
+        # print(f"Skipping downloaded image {filename}")
         return
     else:
+        image_path = ensure_path_exists(year, month, day, image_id)
+        full_path = f"{image_path}/{filename}.png"
         for idx, image_url in enumerate(image_paths):
             if idx > 0:
                 filename = f"{filename[:97]}-{idx}"
                 full_path = f"{image_path}/{filename}.png"
             urllib.request.urlretrieve(image_url, full_path)
+        completed_file_path = f"{image_path}/done"
         f = open(completed_file_path, "x")
         f.close()
     return full_path
