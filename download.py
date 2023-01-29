@@ -99,7 +99,7 @@ def save_prompt(image_json):
                 filename = f"{filename[:97]}-{idx}"
                 full_path = f"{image_path}/{filename}.png"
             opener = urllib.request.build_opener()
-            opener.addheaders = [('User-agent', 'Mozilla/5.0')]
+            opener.addheaders = [('User-agent', UA)]
             urllib.request.install_opener(opener)
             urllib.request.urlretrieve(image_url, full_path)
         completed_file_path = f"{image_path}/done"
