@@ -98,6 +98,9 @@ def save_prompt(image_json):
             if idx > 0:
                 filename = f"{filename[:97]}-{idx}"
                 full_path = f"{image_path}/{filename}.png"
+            opener = urllib.request.build_opener()
+            opener.addheaders = [('User-agent', 'Mozilla/5.0')]
+            urllib.request.install_opener(opener)
             urllib.request.urlretrieve(image_url, full_path)
         completed_file_path = f"{image_path}/done"
         f = open(completed_file_path, "x")
