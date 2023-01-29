@@ -80,7 +80,7 @@ def save_prompt(image_json):
     day = enqueue_time.day
 
     filename = prompt.replace(" ", "_").replace(",", "").replace("*", "").replace("'", "").replace(":", "").replace(
-        "__", "_").replace("<", "").replace(">", "").replace("/", "").replace(".", "").lower().strip("_*")[:100]
+        "__", "_").replace("<", "").replace(">", "").replace("/", "").replace(".", "").lower().strip("_*")[:100] if prompt != None else image_id
 
     ranking_by_user = image_json.get("ranking_by_user")
     if SKIP_LOW_RATED and ranking_by_user and isinstance(ranking_by_user, int) and (ranking_by_user in [1, 2]):
@@ -130,6 +130,11 @@ def download_all_order_by_types():
 def main():
     if not SESSION_TOKEN or not USER_ID:
         raise Exception("Please edit SESSION_TOKEN and USER_ID")
+    
+    opener = urllib.request.build_opener()
+    opener.addheaders = [('User-agent', UA)]
+    urllib.request.install_opener(opener)
+
     download_all_order_by_types()
 
 
