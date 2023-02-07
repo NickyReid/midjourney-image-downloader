@@ -1,7 +1,7 @@
 # midjourney-image-downloader
 Download your Midjourney gallery.
 
-Copied from https://github.com/timmc/midjourney-history-sync ⭐ and adapted with additional advice from [timmc](https://github.com/timmc) ️
+forked from [NickyReid/midjourney-image-downloader](https://github.com/NickyReid/midjourney-image-downloader) ️
 
 ## About
 - Default: saves images in date folders with prompt as filename, eg:
