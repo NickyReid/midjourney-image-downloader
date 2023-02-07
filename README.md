@@ -1,5 +1,5 @@
 # midjourney-image-downloader
-Download your Midjourney gallery.
+Download your Midjourney gallery and all images
 
 forked from [NickyReid/midjourney-image-downloader](https://github.com/NickyReid/midjourney-image-downloader) ️
 
